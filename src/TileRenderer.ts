@@ -99,8 +99,18 @@ module PIXI.tilemap {
                     bs.texture.baseTexture !== texture.baseTexture) {
                     bs.texture = texture;
                     var glt = glts[i >> 2];
+                
+                    if ( bs.texture.baseTexture.source == null )
+                    {
+                        glt.baseTexture = bs.texture.baseTexture;
+                    }
+
                     renderer.bindTexture(glt, 0, true);
-                    _hackSubImage((glt.baseTexture as any)._glTextures[renderer.CONTEXT_UID], bs);
+
+                    if ( bs.texture.baseTexture.source != null )
+                    {
+                        _hackSubImage((glt.baseTexture as any)._glTextures[renderer.CONTEXT_UID], bs);
+                    }
                 }
             }
             this.texLoc.length = 0;
